@@ -2,15 +2,17 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { fetchPopularRepos } from '../utils/api'
 import {FaUser, FaStar, FaCodeBranch, FaExclamationTriangle} from 'react-icons/fa'
+import {GoGitBranch, GoStar, GoBug} from 'react-icons/go'
 
+//btn-clear nav-link
 function LanguagesNav({selected, onUpdateLanguage}){
-    const languages = ['All', 'JavaScript', 'Ruby', 'Java', 'CSS', 'Python']
+    const languages = ['All', 'JavaScript', 'Ruby', 'Java', 'Python', 'Rust']
     return (
-        <ul className="flex-center">
+        <ul className='flex items-center justify-center space-x-4 pd-5 hover:underline'>
             {languages.map(
                 (language) => (
                     <li key={language}>
-                        <button className="btn-clear nav-link"
+                        <button className='border-0 bg-transparent text-gray-800 text-opacity-75 px-8 pb-3 text-lg font-bold focus:underline hover:text-gray-900 hover:underline align-top'
                         style={language === selected ? {color: '#6f5194'} : null}
                         onClick={() => onUpdateLanguage(language)}>
                             {language}
@@ -19,55 +21,57 @@ function LanguagesNav({selected, onUpdateLanguage}){
         </ul>
     )
 }
+//^nav tailwind css done
 
 LanguagesNav.propTypes = {
     selected : PropTypes.string.isRequired,
     onUpdateLanguage : PropTypes.func.isRequired
 }
-
+//gird space-around
 function ReposGrid({repos}){
     return (
-        <ul className = 'grid space-around'>
+        <ul className = 'place-items-stretch grid grid-cols-3 gap-3 content-center pt-3'> 
             {repos.map((repo, index) => {
                 const {name, owner, html_url, stargazers_count, forks, open_issues} = repo
                 const {login, avatar_url} = owner
-
                 return (
-                    <li key={html_url} className = 'repo bg-light'>
-                        <h4 className = 'header-lg center-text'>
+                    <li key={html_url} className = 'mt-0.5 bg-gray-200'>
+                        <h4 className = {index === 0 ? 'bg-yellow-300 text-center text-xl' : index === 1 ? 'bg-gray-400 text-center text-xl' : index === 2 ? 'bg-bronze text-center text-xl' : 'text-center text-xl'}>
                             #{index + 1}
                         </h4>
 
                         <img
-                            className='avatar'
+                            className='w-44 h-44 pt-2 m-0 m-auto block'
                             src={avatar_url}
                             alt={`Avatar for ${login}`}
                         />
-                        <h2 className='center-text'>
+                        <h2 className='text-center font-bold hover:underline hover:text-tertiary'>
                             <a className='link' href={html_url}>{login}</a>
 
                         </h2>
-                        <ul className= 'card-list'>
+                        <ul className= 'm-1.5 text-lg'> {/* cardlist ul */}
+                            {/*
                             <li>
                                 <FaUser color='rgb(255, 191, 116)' size={22} />
                                 <a href={`https://github.com/${login}`}>
                                     {login}
                                 </a>
                             </li>
-                            <li>
+                            */}
+                            <li className='flex items-center m-0.5'>
                                 
                             </li>
-                            <li>
-                                <FaStar color= 'rgb(255, 215, 0)' size={22}/>
+                            <li className='flex items-center m-0.5'>
+                                <GoStar color= 'black' size={22}/>
                                 {stargazers_count.toLocaleString()} stars
                             </li>
-                            <li>
-                                <FaCodeBranch color= 'rgb(129, 195, 245)' size={22}/>
+                            <li className='flex items-center m-0.5'>
+                                <GoGitBranch color= 'black' size={22}/>
                                 {forks.toLocaleString()} forks
                                 
                             </li>
-                            <li>
-                                <FaExclamationTriangle color= 'rgb(241, 138, 0)' size={22}/>
+                            <li className='flex items-center m-0.5'>
+                                <GoBug color= 'black' size={22}/>
                                 {open_issues.toLocaleString()} open issues
                                 
                             </li>
@@ -141,7 +145,7 @@ export default class Popular extends React.Component{
                 onUpdateLanguage = {this.updateLanguage}
                 />
 
-                {this.isLoading() && <p>LOADING</p>}
+                {this.isLoading() && <div className="w-10 h-10 border-b-2 border-gray-900 rounded-full animate-spin m-auto mt-64"></div>}
 
                 {error && <p>{error}</p>}
 

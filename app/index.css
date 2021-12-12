@@ -1,3 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
 html, body, #app {
     margin: 0;
     height: 100%;
@@ -119,3 +124,4 @@ li {
 .repo img{
     margin-bottom: 8px
 }
+*/

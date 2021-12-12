@@ -11,7 +11,7 @@ import Popular from './Components/Popular'
 class App extends React.Component{
     render(){
         return(
-        <div className="container">
+        <div className=' max-w-screen-lg m-auto bg-white items-center'>
             <Popular/>
         </div>
         )
