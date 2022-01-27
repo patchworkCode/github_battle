@@ -29,11 +29,66 @@ function Instructions(){
     )
 }
 
+class PlayerInput extends React.Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      username : ''
+    }
+    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleChange = this.handleChange.bind(this)
+  }
+  handleSubmit(event){
+    event.preventDefault()
+
+    this.props.onSubmit(this.state.username)
+  }
+  handleChange(event) {
+    this.setState({
+      username: event.target.value
+    })
+  }
+  render(){
+   return( 
+      <form className='tailwind' onSubmit={this.handleSubmit}>
+        <label htmlFor='username' className='tailwind'>
+        {this.props.label}
+        </label>
+        <div>
+          <input 
+            type='text'
+            id='username'
+            className='tailwind'
+            placeholder='github username'
+            autoComplete='off'
+            onChange={this.handleChange}
+            />
+          <button 
+            className='tailwind' 
+            type='submit'
+            disabled={!this.state.username}
+          >
+              Submit
+          </button>
+        </div>
+      </form>
+    )
+  }
+}
+
+PlayerInput.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
+  label: PropTypes.string.isRequired
+}
+
 export default class Battle extends React.Component{
     render(){
         return(
             <React.Fragment>
                 <Instructions className="font-custom"/>
+
+                <PlayerInput label="Label!" onSubmit={(value) => console.log('value!', value)} />
             </React.Fragment>
         )
     }
